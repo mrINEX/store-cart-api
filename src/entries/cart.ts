@@ -19,7 +19,7 @@ export class Cart extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @OneToOne(
     () => CartItem,
-    cartItem => cartItem.cart_id,
+    i => i.cart_id,
   )
   id: Relation<CartItem>;
 

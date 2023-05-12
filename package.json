@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "sls:offline": "npx serverless offline",
     "orm:run": "nest build & node dist/rds.service.js",
-    "ts:node": "node node_modules/.bin/ts-node src/rds.service.ts --project tsconfig.json --showConfig"
+    "ts:node": "node node_modules/.bin/ts-node src/rds.service.ts"
   },
   "dependencies": {
     "@nestjs/common": "latest",
@@ -32,6 +32,7 @@
     "@nestjs/platform-express": "latest",
     "@vendia/serverless-express": "latest",
     "aws-lambda": "latest",
+    "dotenv": "^16.0.3",
     "helmet": "latest",
     "passport": "latest",
     "passport-http": "latest",
