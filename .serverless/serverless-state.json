@@ -175,7 +175,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/nest-backend/dev/1683316873870-2023-05-05T20:01:13.870Z/nest-backend.zip"
+                "S3Key": "serverless/nest-backend/dev/1683824542115-2023-05-11T17:02:22.115Z/nest-backend.zip"
               },
               "Handler": "dist/main.handler",
               "Runtime": "nodejs18.x",
@@ -193,14 +193,14 @@
               "MainLogGroup"
             ]
           },
-          "MainLambdaVersionB2sQgeTebcSSzrgeDfM00YpGgmQxWxkRm8v7tx0238": {
+          "MainLambdaVersion7QBCnmbeDUbXpVEecpYIiOO4B7qbzhqufLwTea3tE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MainLambdaFunction"
               },
-              "CodeSha256": "7oJRSqHwVKdMsLKTORI63kp/V/AC4nlQTmwAdq3LDE0="
+              "CodeSha256": "hy0vwwgeuClQgpQLdpDtlFsBEYdmApm0faea7KZ9fEI="
             }
           },
           "ApiGatewayRestApi": {
@@ -325,7 +325,7 @@
               "MainLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1683316850760": {
+          "ApiGatewayDeployment1683824507968": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -388,7 +388,7 @@
           "MainLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MainLambdaVersionB2sQgeTebcSSzrgeDfM00YpGgmQxWxkRm8v7tx0238"
+              "Ref": "MainLambdaVersion7QBCnmbeDUbXpVEecpYIiOO4B7qbzhqufLwTea3tE"
             },
             "Export": {
               "Name": "sls-nest-backend-dev-MainLambdaFunctionQualifiedArn"
@@ -535,7 +535,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "MainLambdaVersionB2sQgeTebcSSzrgeDfM00YpGgmQxWxkRm8v7tx0238"
+        "versionLogicalId": "MainLambdaVersion7QBCnmbeDUbXpVEecpYIiOO4B7qbzhqufLwTea3tE"
       }
     },
     "configValidationMode": "warn",
@@ -557,7 +557,7 @@
     "artifact": "/Users/Uladzimir_Kazak/Desktop/awsfree/store-cart-api/.serverless/nest-backend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/nest-backend/dev/1683316873870-2023-05-05T20:01:13.870Z",
+    "artifactDirectoryName": "serverless/nest-backend/dev/1683824542115-2023-05-11T17:02:22.115Z",
     "artifact": "nest-backend.zip"
   }
 }
