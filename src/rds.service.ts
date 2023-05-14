@@ -10,7 +10,7 @@ dotenv.config();
 
 const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.RDS,
+  host: process.env.DATABASE_HOST,
   port: 5432,
   username: 'postgres',
   password: 'postgres',

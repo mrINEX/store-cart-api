@@ -24,19 +24,3 @@ export const handler: Handler = async (
   server = server ?? (await bootstrap());
   return server(event, context, callback);
 };
-
-// const port = process.env.PORT || 4000;
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-
-//   app.enableCors({
-//     origin: (req, callback) => callback(null, true),
-//   });
-//   app.use(helmet());
-
-//   await app.listen(port);
-// }
-// bootstrap().then(() => {
-//   console.log('App is running on %s port', port);
-// });
