@@ -52,6 +52,7 @@
     "@nestjs/testing": "^9.4.0",
     "@types/aws-lambda": "latest",
     "@types/express": "latest",
+    "@types/express-serve-static-core": "^4.17.35",
     "@types/jest": "latest",
     "@types/node": "^20.1.3",
     "@types/passport-jwt": "latest",

@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { v4 } from 'uuid';
 
-import * as carts from '../../entries/cart';
+import * as cart from '../../entries/cart';
 import { Cart } from '../models';
 
 @Injectable()
@@ -12,28 +11,31 @@ export class CartService {
   private userCarts: Record<string, Cart> = {}; // old
 
   constructor(
-    @InjectRepository(carts.Cart)
-    private readonly cartRepo: Repository<carts.Cart>, // new
+    @InjectRepository(cart.Cart)
+    private readonly cartRepo: Repository<cart.Cart>,
   ) {}
 
-  findByUserId(userId: string): Cart {
-    return this.userCarts[userId];
+  findByUserId(userId: string): Promise<cart.Cart> {
+    return this.cartRepo.findOne({
+      relations: ['id', 'user_id'],
+      where: { user_id: { id: userId } },
+    });
   }
 
-  createByUserId(userId: string) {
-    const id = v4(v4());
+  async createByUserId(userId: string): Promise<cart.Cart> {
     const userCart = {
-      id,
-      items: [],
+      user_id: { id: userId },
+      created_at: new Date(),
+      updated_at: new Date(),
     };
 
-    this.userCarts[userId] = userCart;
+    await this.cartRepo.create(userCart);
 
-    return userCart;
+    return userCart as cart.Cart;
   }
 
-  findOrCreateByUserId(userId: string): Cart {
-    const userCart = this.findByUserId(userId);
+  async findOrCreateByUserId(userId: string): Promise<cart.Cart> {
+    const userCart = await this.findByUserId(userId);
 
     if (userCart) {
       return userCart;
@@ -42,7 +44,7 @@ export class CartService {
     return this.createByUserId(userId);
   }
 
-  updateByUserId(userId: string, { items }: Cart): Cart {
+  updateByUserId(userId: string, { items }: cart.Cart): Promise<cart.Cart> {
     const { id, ...rest } = this.findOrCreateByUserId(userId);
 
     const updatedCart = {
@@ -69,29 +71,10 @@ export class CartService {
     return true;
   }
 
+  /**
+   * for test getting all. It works.
+   */
   async findAll() {
-    return this.cartRepo.find({});
+    return this.cartRepo.find({ relations: ['id'] });
   }
-
-  // async findOne(id: CartItem) {
-  //   return this.cartRepo.findOne({ id, relations: ['id']});
-  // }
-
-  // async update(id: string, updateOrderDto: UpdateOrderDto) {
-  //   try {
-  //     await this.cartRepo.update({ id }, updateOrderDto);
-  //   } catch (e) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  // async remove(id: string) {
-  //   try {
-  //     await this.orderRepo.delete({ id });
-  //   } catch (e) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 }

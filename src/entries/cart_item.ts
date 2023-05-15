@@ -18,7 +18,7 @@ export class CartItem extends BaseEntity {
     () => Cart,
     cart => cart.id,
   )
-  @JoinColumn()
+  @JoinColumn({ name: 'cart_id', referencedColumnName: 'id' })
   cart_id: Relation<Cart>;
 
   @Column({ default: 33 })

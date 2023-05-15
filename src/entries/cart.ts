@@ -5,8 +5,10 @@ import {
   Relation,
   PrimaryGeneratedColumn,
   BaseEntity,
+  ManyToOne,
 } from 'typeorm';
 import { CartItem } from './cart_item';
+import { User } from './user';
 
 enum Status {
   OPEN = 'OPEN',
@@ -22,8 +24,11 @@ export class Cart extends BaseEntity {
   )
   id: Relation<CartItem>;
 
-  @Column({ nullable: false })
-  user_id: string;
+  @ManyToOne(
+    () => User,
+    user => user.cart_id,
+  )
+  user_id: Relation<User>;
 
   @Column({ nullable: false })
   created_at: Date;
