@@ -58,6 +58,7 @@ AppDataSource.initialize()
 
     const foundCart = await Cart.find({
       where: { user_id: { id: 'f5cf3440-5ba7-4e3e-b1e3-6cb93594175a' } },
+      relations: ['user_id', 'id'],
     });
     const foundCartItem = await CartItem.find({ relations: { cart_id: true } });
 
