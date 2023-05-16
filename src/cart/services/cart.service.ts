@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { v4 } from 'uuid';
 
 import * as cart from '../../entries/cart';
 import { Cart } from '../models';
@@ -17,8 +16,8 @@ export class CartService {
 
   findByUserId(userId: string): Promise<cart.Cart> {
     return this.cartRepo.findOne({
-      relations: ['id', 'user_id'],
       where: { user_id: { id: userId } },
+      relations: ['user_id', 'id'],
     });
   }
 
@@ -41,21 +40,19 @@ export class CartService {
       return userCart;
     }
 
-    return this.createByUserId(userId);
+    return await this.createByUserId(userId);
   }
 
-  updateByUserId(userId: string, { items }: cart.Cart): Promise<cart.Cart> {
-    const { id, ...rest } = this.findOrCreateByUserId(userId);
+  async updateByUserId(userId: string, cart: cart.Cart): Promise<cart.Cart> {
+    const { id, ...rest } = await this.findOrCreateByUserId(userId);
 
     const updatedCart = {
       id,
+      ...cart,
       ...rest,
-      items: [...items],
     };
 
-    this.userCarts[userId] = { ...updatedCart };
-
-    return { ...updatedCart };
+    return await this.cartRepo.save({ ...updatedCart });
   }
 
   removeByUserId(userId): void {

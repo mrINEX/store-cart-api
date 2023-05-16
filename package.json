@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "sls:offline": "npm run build & npx serverless offline",
+    "sls:offline": "nest build & npx serverless offline",
     "orm:run": "nest build & node dist/rds.service.js",
     "ts:node": "node node_modules/.bin/ts-node src/rds.service.ts"
   },

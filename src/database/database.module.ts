@@ -15,16 +15,7 @@ import { User } from '../entries/user';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: ['dist/entries/*{.ts,.js}'],
-      /**
-       * Flag to show all generated sql queries on each interaction with DB.
-       * Should be omitted for production production.
-       */
-      logging: true,
-      /**
-       * This naming strategy will map field_name from database to fieldName inside application.
-       */
-      namingStrategy: new SnakeNamingStrategy(),
+      entities: [Cart, CartItem, Order, User],
     }),
     TypeOrmModule.forFeature([Cart, CartItem, Order, User]),
   ],

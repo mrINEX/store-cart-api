@@ -27,24 +27,22 @@ export class CartController {
   // @UseGuards(BasicAuthGuard)
   @Get()
   async findUserCart(@Req() req: AppRequest) {
-    const cart = this.cartService.findOrCreateByUserId(
+    const cart = await this.cartService.findOrCreateByUserId(
       getUserIdFromRequest(req),
     );
-    const carts = await this.cartService.findAll();
 
     return {
       statusCode: HttpStatus.OK,
       message: 'OK',
-      data: { cart, total: calculateCartTotal(cart), carts },
+      data: { cart, total: cart.id.length },
     };
   }
 
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
   @Put()
-  updateUserCart(@Req() req: AppRequest, @Body() body) {
-    // TODO: validate body payload...
-    const cart = this.cartService.updateByUserId(
+  async updateUserCart(@Req() req: AppRequest, @Body() body) {
+    const cart = await this.cartService.updateByUserId(
       getUserIdFromRequest(req),
       body,
     );
@@ -54,7 +52,7 @@ export class CartController {
       message: 'OK',
       data: {
         cart,
-        total: calculateCartTotal(cart),
+        total: cart.id.length,
       },
     };
   }
@@ -74,11 +72,11 @@ export class CartController {
   // @UseGuards(JwtAuthGuard)
   // @UseGuards(BasicAuthGuard)
   @Post('checkout')
-  checkout(@Req() req: AppRequest, @Body() body) {
+  async checkout(@Req() req: AppRequest, @Body() body) {
     const userId = getUserIdFromRequest(req);
-    const cart = this.cartService.findByUserId(userId);
+    const cart = await this.cartService.findByUserId(userId);
 
-    if (!(cart && cart.items.length)) {
+    if (!(cart && cart.id.length)) {
       const statusCode = HttpStatus.BAD_REQUEST;
       req.statusCode = statusCode;
 
@@ -88,8 +86,8 @@ export class CartController {
       };
     }
 
-    const { id: cartId, items } = cart;
-    const total = calculateCartTotal(cart);
+    const { id: cartId, id: items } = cart;
+    const total = cart.id.length;
     const order = this.orderService.create({
       ...body, // TODO: validate and pick only necessary data
       userId,

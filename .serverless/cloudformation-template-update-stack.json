@@ -162,13 +162,22 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nest-backend/dev/1683918424994-2023-05-12T19:07:04.994Z/nest-backend.zip"
+          "S3Key": "serverless/nest-backend/dev/1684187676322-2023-05-15T21:54:36.322Z/nest-backend.zip"
         },
         "Handler": "dist/main.handler",
         "Runtime": "nodejs18.x",
         "FunctionName": "nest-backend-dev-main",
         "MemorySize": 1024,
         "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "DATABASE_NAME": "freeaws",
+            "DATABASE_HOST": "rds-database-freeaws.co3pfw2peihx.us-east-1.rds.amazonaws.com",
+            "DATABASE_PORT": "5432",
+            "DATABASE_USERNAME": "postgres",
+            "DATABASE_PASSWORD": "postgres"
+          }
+        },
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -180,14 +189,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionuezvskSCYNPHkI3hdrY668jqlI9bmzUzoG9U97gbI": {
+    "MainLambdaVersionjl21nwyDwNUBzN0otkVUPOk63KkhioKcdoSoGHeF2U4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "PjQUShwpemtgWdFFzXpni97yIBee/cJYcPYtTFY5HME="
+        "CodeSha256": "OXUi3ArQba4+oDsq/XAtn8i3u1d2YD9XEejwFpeC5qw="
       }
     },
     "ApiGatewayRestApi": {
@@ -312,7 +321,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1683918395206": {
+    "ApiGatewayDeployment1684187641679": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -375,7 +384,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionuezvskSCYNPHkI3hdrY668jqlI9bmzUzoG9U97gbI"
+        "Ref": "MainLambdaVersionjl21nwyDwNUBzN0otkVUPOk63KkhioKcdoSoGHeF2U4"
       },
       "Export": {
         "Name": "sls-nest-backend-dev-MainLambdaFunctionQualifiedArn"

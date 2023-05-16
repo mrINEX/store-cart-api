@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Cart } from './cart';
 
@@ -14,7 +15,7 @@ export class CartItem extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   product_id: string;
 
-  @OneToOne(
+  @ManyToOne(
     () => Cart,
     cart => cart.id,
   )

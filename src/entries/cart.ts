@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { CartItem } from './cart_item';
 import { User } from './user';
@@ -18,11 +19,11 @@ enum Status {
 @Entity()
 export class Cart extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  @OneToOne(
+  @OneToMany(
     () => CartItem,
     i => i.cart_id,
   )
-  id: Relation<CartItem>;
+  id: Relation<CartItem[]>;
 
   @ManyToOne(
     () => User,

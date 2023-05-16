@@ -56,7 +56,9 @@ AppDataSource.initialize()
       console.log('Order created');
     }
 
-    const foundCart = await Cart.find({ relations: { id: true } });
+    const foundCart = await Cart.find({
+      where: { user_id: { id: 'f5cf3440-5ba7-4e3e-b1e3-6cb93594175a' } },
+    });
     const foundCartItem = await CartItem.find({ relations: { cart_id: true } });
 
     console.log(
