@@ -1,17 +1,16 @@
 import {
   Entity,
   Column,
-  Relation,
-  PrimaryGeneratedColumn,
   BaseEntity,
   JoinColumn,
   OneToMany,
+  PrimaryColumn,
 } from 'typeorm';
 import { Cart } from './cart';
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id: string;
 
   @OneToMany(

@@ -27,6 +27,7 @@ AppDataSource.initialize()
 
     if ('') {
       const user = new User();
+      user.id = 'uk';
       user.name = 'Uladzimir';
       await user.save();
       console.log('User created');
@@ -57,7 +58,7 @@ AppDataSource.initialize()
     }
 
     const foundCart = await Cart.find({
-      where: { user_id: { id: 'f5cf3440-5ba7-4e3e-b1e3-6cb93594175a' } },
+      where: { user_id: { id: 'uk' } },
       relations: ['user_id', 'id'],
     });
     const foundCartItem = await CartItem.find({ relations: { cart_id: true } });

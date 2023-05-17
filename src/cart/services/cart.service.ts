@@ -2,16 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { v4 } from 'uuid';
-
 import * as cartE from '../../entries/cart';
 import * as userE from '../../entries/user';
-import { Cart } from '../models';
+import * as cartItemE from '../../entries/cart_item';
 
 @Injectable()
 export class CartService {
-  private userCarts: Record<string, Cart> = {}; // old
-
   constructor(
     @InjectRepository(cartE.Cart)
     private readonly cartRepo: Repository<cartE.Cart>,
@@ -39,17 +35,25 @@ export class CartService {
     await cart.save();
     console.log('Cart created');
 
+    const cartItem = new cartItemE.CartItem();
+    cartItem.count = 55;
+    cartItem.cart_id = cart;
+    await cartItem.save();
+    console.log('CartItem created');
+
     return cart;
   }
 
-  async findOrCreateByUserId(userId: string = v4(v4())): Promise<cartE.Cart> {
-    const userCart = await this.findByUserId(userId);
+  async findOrCreateByUserId(userId: string): Promise<cartE.Cart> {
+    const id = String(userId);
+    const userCart = await this.findByUserId(id);
+    console.log({ userCart });
 
     if (userCart) {
       return userCart;
     }
 
-    return await this.createByUserId(userId);
+    return await this.createByUserId(id);
   }
 
   async updateByUserId(
@@ -59,17 +63,17 @@ export class CartService {
     const { id, ...cartByUser } = await this.findOrCreateByUserId(userId);
 
     const updatedCart = {
-      ...cartByUser,
       ...cartBody,
-      ...new cartE.Cart(),
+      ...cartByUser,
     };
     console.log(updatedCart);
 
     return await this.cartRepo.save(updatedCart);
   }
 
-  removeByUserId(userId): void {
-    this.userCarts[userId] = null;
+  async removeByUserId(userId): Promise<void> {
+    const { id, ...cart } = await this.findOrCreateByUserId(userId);
+    await this.cartRepo.softRemove(cart);
   }
 
   async create(/*createOrderDto: CreateOrderDto*/) {
